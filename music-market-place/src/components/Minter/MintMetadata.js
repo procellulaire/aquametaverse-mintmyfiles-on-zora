@@ -1,5 +1,10 @@
-import React, { useState } from "react";
+import React, { useContext, useState,useEffect } from "react";
 import { Button, Container, Form, Alert,Row,Col,Spinner } from "react-bootstrap";
+import { UserContext } from "../../context/UserContext";
+import { NFTContext } from "../../context/NFTContext";
+import ShowFile from "./ShowFile";
+import { NFTStorage } from "nft.storage/dist/bundle.esm.min.js";
+import { StepContext } from "../../context/StepContext";
 
 export default function MintMetadata() {
   const [form, setForm] = useState({});
@@ -7,21 +12,51 @@ export default function MintMetadata() {
   const [showAlert, setShowAlert] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [metadata, setMetadata] = useState();
+  const { nft, setNft } = useContext(NFTContext);
+  const {wallet,isAuth} = useContext(UserContext)
+  const { step, setStep } = useContext(StepContext);
+
   const handleOnChange = (e) => {
     setForm({ ...form, [e.target.id]: e.target.value });
   };
-  const handleOnChangeFile = (e) => {
-    setForm({ ...form, file: e.target.value });
-  };
-  const mintMetadata = () =>{
+//   const handleOnChangeFile = (e) => {
+//     setForm({ ...form, file: e.target.value });
+//   };
+  
+  const mintMetadata = async() =>{
+    setIsLoading(true);
+    const client = new NFTStorage({ token: process.env.REACT_APP_NFT_STORAGE });
+    if(isAuth){
+        const blob = new Blob([JSON.stringify(form, null, 2)], {type : 'application/json'});
+        const cid = await client.storeBlob(blob);
+        console.log("cid", cid);
+        setForm({ ...form, CID: cid});
+      setNft({ ...nft, metadata: form });
 
+      setIsLoading(false);
+      setAlert({
+        type: "success",
+        message: `Your metadata has been uploaded to IPFS successfully. CID: ${cid}`,
+        title: "Upload Successfully!",
+      });
+      setStep(2);
+    }
+    else {
+        setAlert({
+          type: "danger",
+          message: "You are not logged in yet. Please Login first",
+          title: "Error",
+        });
+        setShowAlert(true);
+        setIsLoading(false);
+      }
   }
 
   return (
     <Container>
       <h2 className="my-0 py-0">Mint Metadata for your minted file</h2>
       <p className="my-0 py-0 text-muted">Powered by NFT.Storage</p>
-      <p>Fill the form to link meta data with your NFT file</p>
+      
       {showAlert && (
         <Alert
           variant={alert.type}
@@ -33,8 +68,9 @@ export default function MintMetadata() {
         </Alert>
       )}
       <Form className="my-5">
+      <p>Fill the form to link meta data with your NFT file</p>
         <Form.Group className="mb-3" controlId="name">
-          <Form.Label>your Metadata Title</Form.Label>
+          <Form.Label> Title</Form.Label>
           <Form.Control
             type="text"
             placeholder="Enter a name for your Metadata"
@@ -49,27 +85,19 @@ export default function MintMetadata() {
             onChange={handleOnChange}
           />
         </Form.Group>
-        <Form.Group className="mb-3" controlId="twitter">
-          <Form.Label>Link to twitter</Form.Label>
+        <Form.Group className="mb-3" controlId="edition">
+          <Form.Label>Edition</Form.Label>
           <Form.Control
             type="text"
-            placeholder="Creator Twitter"
+            placeholder="Music Edition Name"
             onChange={handleOnChange}
           />
         </Form.Group>
-        <Form.Group className="mb-3" controlId="telegram">
-          <Form.Label>Link to Telegram</Form.Label>
+        <Form.Group className="mb-3" controlId="collection">
+          <Form.Label>Collection</Form.Label>
           <Form.Control
             type="text"
-            placeholder="Creator Telegram "
-            onChange={handleOnChange}
-          />
-        </Form.Group>
-        <Form.Group className="mb-3" controlId="portfolio">
-          <Form.Label>Link to Protfolio</Form.Label>
-          <Form.Control
-            type="text"
-            placeholder="Enter Creator portfolio Link"
+            placeholder="Music Collection Name"
             onChange={handleOnChange}
           />
         </Form.Group>
@@ -77,60 +105,14 @@ export default function MintMetadata() {
           <Form.Label>Description</Form.Label>
           <Form.Control as="textarea" rows={3} onChange={handleOnChange} />
         </Form.Group>
-        <Form.Group className="mb-3" controlId="loyality">
-          <Form.Label>Loyality</Form.Label>
-          <Form.Control
-            type="text"
-            placeholder="Enter Loyality"
-            onChange={handleOnChange}
-          />
-        </Form.Group>
-        <Form.Group className="mb-3" controlId="percentage">
-          <Form.Label>Percentage</Form.Label>
-          <Form.Control
-            type="text"
-            placeholder="Enter Creator Percentage"
-            onChange={handleOnChange}
-          />
-        </Form.Group>
+        
         <Form.Group controlId="file_url" className="mb-3">
-          <Form.Label>Choose From your files</Form.Label>
-          <Row>
-            {myFiles &&
-              myFiles.map((item, index) => {
-                return (
-                  <Col key={index}>
-                    <input
-                      type="radio"
-                      name="imgbackground"
-                      id={item.ipfs_uri.replace("ipfs://", "").replace("/", "")}
-                      className="d-none imgbgchk"
-                      value={item.ipfs_url}
-                      onChange={handleOnChangeFile}
-                    />
-                    <label
-                      htmlFor={item.ipfs_uri
-                        .replace("ipfs://", "")
-                        .replace("/", "")}
-                    >
-                      <img
-                        src={item.ipfs_url}
-                        alt={item.file_name}
-                        className=" rounded"
-                      />
-                      <div className="tick_container">
-                        <div className="tick">
-                          <i className="fa fa-check"></i>
-                        </div>
-                      </div>
-                    </label>
-                  </Col>
-                );
-              })}
-          </Row>
+          <Form.Label>Your Minted File</Form.Label>
+          <img src={`https://nftstorage.link/ipfs/${nft.CID}`} className="w-100"/>
+         
         </Form.Group>
 
-        <Button color="primary" outline circle onClick={mintMetadata}>
+        <Button color="primary"  onClick={mintMetadata}>
           {isLoading ? <Spinner animation="border" /> : "Mint Metadata "}
         </Button>
       </Form>

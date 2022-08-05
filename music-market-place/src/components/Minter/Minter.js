@@ -2,6 +2,7 @@ import React, { useContext, useEffect } from "react";
 import Stepper from "react-stepper-horizontal/lib/Stepper";
 import { StepContext } from "../../context/StepContext";
 import MintMetadata from "./MintMetadata";
+import MintNFT from "./MintNFT";
 import UploadFile from "./UploadFile";
 
 export default function Minter() {
@@ -17,7 +18,7 @@ export default function Minter() {
       case 1:
         return <MintMetadata />;
       case 2:
-        return <UploadFile />;
+        return <MintNFT />;
       case 3:
         return <UploadFile />;
 
