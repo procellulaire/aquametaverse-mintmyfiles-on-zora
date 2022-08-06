@@ -5,6 +5,7 @@ import { UserProvider } from "./context/UserContext";
 import MainPage from "./pages/MainPage/MainPage";
 import MinterPage from "./pages/MinterPage/MinterPage";
 import ProfilePage from "./pages/ProfilePage/ProfilePage";
+import TestPage from "./pages/testPage/TestPage";
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
       <Routes>
           <Route path="/profile" element={<ProfilePage />} />
           <Route path="/minter" element={<MinterPage />} />
+          <Route path="/test" element={<TestPage />} />
           <Route path="/" element={<MainPage />} />
         </Routes>
     </div>

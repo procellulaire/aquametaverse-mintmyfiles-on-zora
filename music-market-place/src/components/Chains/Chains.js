@@ -25,14 +25,14 @@ const menuItems = [
     key: "0x89",
     value: "Polygon",
     icon: <PolygonLogo />,
-    disabled: true,
+    disabled: false,
     variant: "chains",
   },
   {
     key: "0x13881",
     value: "Mumbai",
     icon: <PolygonLogo />,
-    disabled: true,
+    disabled: false,
     variant: "chains",
   },
 ];
