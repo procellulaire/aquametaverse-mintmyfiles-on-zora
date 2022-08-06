@@ -1,8 +1,7 @@
 import React, { useContext, useState,useEffect } from "react";
-import { Button, Container, Form, Alert,Row,Col,Spinner } from "react-bootstrap";
+import { Button, Container, Form, Alert,Row,Col,Spinner, Card } from "react-bootstrap";
 import { UserContext } from "../../context/UserContext";
 import { NFTContext } from "../../context/NFTContext";
-import ShowFile from "./ShowFile";
 import { NFTStorage } from "nft.storage/dist/bundle.esm.min.js";
 import { StepContext } from "../../context/StepContext";
 
@@ -11,7 +10,6 @@ export default function MintMetadata() {
   const [alert, setAlert] = useState({});
   const [showAlert, setShowAlert] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const [metadata, setMetadata] = useState();
   const { nft, setNft } = useContext(NFTContext);
   const {wallet,isAuth} = useContext(UserContext)
   const { step, setStep } = useContext(StepContext);
@@ -19,24 +17,23 @@ export default function MintMetadata() {
   const handleOnChange = (e) => {
     setForm({ ...form, [e.target.id]: e.target.value });
   };
-//   const handleOnChangeFile = (e) => {
-//     setForm({ ...form, file: e.target.value });
-//   };
   
   const mintMetadata = async() =>{
     setIsLoading(true);
     const client = new NFTStorage({ token: process.env.REACT_APP_NFT_STORAGE });
     if(isAuth){
         const blob = new Blob([JSON.stringify(form, null, 2)], {type : 'application/json'});
-        const cid = await client.storeBlob(blob);
+        const metadata = new File([blob],"metadata.json")
+        //const cid = await client.storeBlob(blob);
+        const cid = await client.storeDirectory([nft.file,nft.cover,metadata]);
         console.log("cid", cid);
         setForm({ ...form, CID: cid});
-      setNft({ ...nft, metadata: form });
+      setNft({ ...nft, metadata: form , CID:cid});
 
       setIsLoading(false);
       setAlert({
         type: "success",
-        message: `Your metadata has been uploaded to IPFS successfully. CID: ${cid}`,
+        message: `Your File & metadata has been uploaded to IPFS successfully. CID: ${cid}`,
         title: "Upload Successfully!",
       });
       setStep(2);
@@ -53,7 +50,7 @@ export default function MintMetadata() {
   }
 
   return (
-    <Container>
+    <Container className="my-5">
       <h2 className="my-0 py-0">Mint Metadata for your minted file</h2>
       <p className="my-0 py-0 text-muted">Powered by NFT.Storage</p>
       
@@ -107,13 +104,28 @@ export default function MintMetadata() {
         </Form.Group>
         
         <Form.Group controlId="file_url" className="mb-3">
-          <Form.Label>Your Minted File</Form.Label>
-          <img src={`https://nftstorage.link/ipfs/${nft.CID}`} className="w-100"/>
-         
+          <Form.Label>Your Selected File</Form.Label>
+          <Row>
+            <Col lg={6}>
+            <Card className="h-100">
+              <Card.Body>
+              <img src={URL.createObjectURL(nft.cover)} className="w-100"/>
+              </Card.Body>
+            </Card>
+            </Col>
+            <Col lg={6}>
+              <Card className="h-100">
+                <Card.Body>
+                <object data={URL.createObjectURL(nft.file)} className="w-100"/>
+                </Card.Body>
+              </Card>
+            
+            </Col>
+          </Row>
         </Form.Group>
 
         <Button color="primary"  onClick={mintMetadata}>
-          {isLoading ? <Spinner animation="border" /> : "Mint Metadata "}
+          {isLoading ? <Spinner animation="border" /> : "Mint To IPFS "}
         </Button>
       </Form>
     </Container>
