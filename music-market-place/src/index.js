@@ -4,15 +4,23 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { MoralisProvider } from "react-moralis";
+import { MoralisProvider } from 'react-moralis';
 import { HashRouter } from 'react-router-dom';
+import { QueryClient, QueryClientProvider } from 'react-query';
+
+const client = new QueryClient();
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <MoralisProvider serverUrl={process.env.REACT_APP_SERVER_URL} appId={process.env.REACT_APP_APP_ID}>
-      <HashRouter >
-      <App />
+    <MoralisProvider
+      serverUrl={process.env.REACT_APP_SERVER_URL}
+      appId={process.env.REACT_APP_APP_ID}
+    >
+      <HashRouter>
+        <QueryClientProvider client={client}>
+          <App />
+        </QueryClientProvider>
       </HashRouter>
     </MoralisProvider>
   </React.StrictMode>
