@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import styles from './Profile.css';
+import { useMoralisQuery } from "react-moralis";
+import { UserContext } from "../../context/UserContext";
 // import { useQuery } from 'react-query';
 // import { request, gql } from 'graphql-request';
 // import { NFTPreview } from "@zoralabs/nft-components";
@@ -13,8 +15,8 @@ const collectionNFT = `
   {
     tokens(
       networks: [{ network: ETHEREUM, chain: MAINNET }]
-      pagination: { limit: 3 }
-      where: { ownerAddresses: "jacob.eth" }
+      pagination: { limit: 500 }
+      where: { ownerAddresses: "0xa8c22791Ff769D5246B41252bcfB8F11df036F78" }
     ) {
       nodes {
         token {
@@ -36,7 +38,7 @@ export default function ProfilePage() {
   const [data, setData] = useState([]);
 
   React.useEffect(() => {
-    fetch('https://api.zora.co/graphql', {
+    fetch(endpoint, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ query: collectionNFT }),
@@ -59,8 +61,8 @@ export default function ProfilePage() {
             <div>
               <iframe
                 // src='https://api.blitmap.com/v1/png/393'
-                src={`https://embed.zora.co/${launch.token.collectionAddress}/2260?title=true&controls=false&loop=true&autoplay=true&market=false`}
-                // src={launch.token.image.url}
+                // src={`https://embed.zora.co/${launch.token.collectionAddress}/2260?title=true&controls=false&loop=true&autoplay=true&market=false`}
+                src={launch.token.image.url}
                 width={"540px"}
                 height={"450px"}
               />
