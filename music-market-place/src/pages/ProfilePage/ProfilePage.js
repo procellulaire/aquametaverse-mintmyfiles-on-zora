@@ -2,9 +2,6 @@ import React, { useState } from 'react';
 import { request, gql } from 'graphql-request';
 import { useQuery } from 'react-query';
 
-const endpoint = 'https://api.zora.co/graphql';
-
-
 export default function ProfilePage() {
   const [data, setData] = useState([])
 
@@ -12,7 +9,7 @@ export default function ProfilePage() {
   React.useEffect(() => {
     const collectionNFT = `query myNfts {
       tokens(networks: [{network: ETHEREUM, chain: RINKEBY}], 
-            pagination: {limit: 3}, 
+            pagination: {limit: 5}, 
             where: {ownerAddresses: "0x19f03dEB28fdB750f487Ca4940A28879fD5D9096"}) {
         nodes {
           token {

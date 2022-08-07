@@ -49,6 +49,18 @@ export default function MintMetadata() {
       }
   }
 
+  // "metadata": {
+  //   "bpm": 0,
+  //   "genres": ["Electronic"],
+  //   "key": 1, // See schema below for how to represent keys.
+  //   "mediaType": "one-shot",
+  //   "tags": [
+  //    "Synth Bass"
+  //   ],
+  //   "title": "Your Bass Wave 2"
+  // },
+
+
   return (
     <Container className="my-5">
       <h2 className="my-0 py-0">Mint Metadata for your minted file</h2>
@@ -67,34 +79,34 @@ export default function MintMetadata() {
       <Form className="my-5">
       <p>Fill the form to link meta data with your NFT file</p>
         <Form.Group className="mb-3" controlId="name">
-          <Form.Label> Title</Form.Label>
+          <Form.Label> Name</Form.Label>
           <Form.Control
             type="text"
             placeholder="Enter a name for your Metadata"
             onChange={handleOnChange}
           />
         </Form.Group>
-        <Form.Group className="mb-3" controlId="author">
-          <Form.Label>Author</Form.Label>
+        <Form.Group className="mb-3" controlId="bpm">
+          <Form.Label>BPM</Form.Label>
           <Form.Control
             type="text"
-            placeholder="Author Name"
+            placeholder="BPM (0 - 1)"
             onChange={handleOnChange}
           />
         </Form.Group>
-        <Form.Group className="mb-3" controlId="edition">
-          <Form.Label>Edition</Form.Label>
+        <Form.Group className="mb-3" controlId="mediaType">
+          <Form.Label>Media Type</Form.Label>
           <Form.Control
             type="text"
-            placeholder="Music Edition Name"
+            placeholder="Media type - song, stem, one-shot"
             onChange={handleOnChange}
           />
         </Form.Group>
-        <Form.Group className="mb-3" controlId="collection">
-          <Form.Label>Collection</Form.Label>
+        <Form.Group className="mb-3" controlId="tags">
+          <Form.Label>Tags</Form.Label>
           <Form.Control
             type="text"
-            placeholder="Music Collection Name"
+            placeholder="Tags for searching and filtering. separate them with ,"
             onChange={handleOnChange}
           />
         </Form.Group>

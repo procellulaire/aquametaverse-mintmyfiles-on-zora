@@ -56,7 +56,7 @@ export default function Web3Login() {
   if (isAuth && wallet) {
     return (
       <>
-        <Button variant="outline-dark"  onClick={logOut} disabled={isAuthenticating}>
+        <Button variant="outline-dark"   onClick={logOut} disabled={isAuthenticating}>
           {wallet.substring(0, 4)} ... {wallet.substring(wallet.length - 4)}
         </Button>
 

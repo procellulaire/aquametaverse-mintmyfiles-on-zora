@@ -108,6 +108,14 @@ export default function DeployContract() {
     console.log("write options",writeOptions)
     Moralis.executeFunction(writeOptions).then((response) =>{
       console.log("response Drop", response);
+      setAlert({
+        type: "success",
+        message: `YAY! Your Contract deployed successfully!`,
+        title: "Contract Deployed",
+        link:`https://rinkeby.etherscan.io/tx/${response.hash}`,
+        linkText:"View Transaction"
+      });
+      setShowAlert(true)
     })
     
   };
@@ -120,18 +128,7 @@ export default function DeployContract() {
       console.log("enable web3");
       enableWeb3();
     }
-    // const animHash = nft.file
-    //   ? await generateSHA256FileHash(nft.file)
-    //   : "0x0000000000000000000000000000000000000000000000000000000000000000";
-    // const imgHash = nft.cover
-    //   ? await generateSHA256FileHash(nft.cover)
-    //   : "0x0000000000000000000000000000000000000000000000000000000000000000";
-    //const ethers = Moralis.web3Library;
-
-    //_editionSize: `ipfs://${nft.CID}/${nft.file.name}`,
-    // _animationHash: animHash,
-    // _imageUrl: `ipfs://${nft.CID}/${nft.cover.name}`,
-    // _imageHash: imgHash,
+    
 
     const writeOptions = {
       contractAddress: (chain==="0x4")? zoraDropCreator[4] : zoraDropCreator[1],
@@ -161,6 +158,14 @@ export default function DeployContract() {
     };
     Moralis.executeFunction(writeOptions).then((response) =>{
       console.log("responseEdition", response);
+      setAlert({
+        type: "success",
+        message: `YAY! Your Contract deployed successfully!`,
+        title: "Contract Deployed",
+        link:`https://rinkeby.etherscan.io/tx/${response.hash}`,
+        linkText:"View Transaction"
+      });
+      setShowAlert(true)
     })
   }
 
@@ -176,6 +181,7 @@ export default function DeployContract() {
         >
           <Alert.Heading>{alert.title}</Alert.Heading>
           <p>{alert.message}</p>
+          <a href={alert.link} target="_blank">{alert.linkText}</a>
         </Alert>
       )}
 

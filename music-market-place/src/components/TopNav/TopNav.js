@@ -21,6 +21,8 @@ export default function TopNav() {
           />{" "}
           AquaMetaverse
         </Navbar.Brand>
+        <Navbar.Toggle aria-controls="basic-navbar-nav" />
+        <Navbar.Collapse id="basic-navbar-nav">
         <Nav className="ms-auto">
           <Link to="/minter" className="nav-link">Deploy NFTs</Link>
           <Link to="/mintnft" className="nav-link">Mint NFT</Link>
@@ -29,6 +31,8 @@ export default function TopNav() {
           <Web3Login />
           
         </Nav>
+        </Navbar.Collapse>
+       
       </Container>
     </Navbar>
   );

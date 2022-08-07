@@ -46,6 +46,13 @@ export default function MintNFT() {
     console.log("write options",writeOptions)
     Moralis.executeFunction(writeOptions).then((response) =>{
       console.log("response mint", response);
+      setAlert({
+        type: "success",
+        message: `Your mint was successfull!`,
+        title: "NFT Minted",
+        link:`https://rinkeby.etherscan.io/tx/${response.hash}`,
+        linkText:"View Transaction"
+      });
     })
     
   };
@@ -61,6 +68,7 @@ export default function MintNFT() {
         >
           <Alert.Heading>{alert.title}</Alert.Heading>
           <p>{alert.message}</p>
+          <a href={alert.link} target="_blank">{alert.linkText}</a>
         </Alert>
       )}
       <Form className="my-5">
