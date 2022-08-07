@@ -1,0 +1,90 @@
+/*
+ZORA provides multiple tools for making it easy to display NFTs
+NFT Iframe: Embed NFTs into your own website
+NFT Components: React components that can be used to render NFT content
+
+--------------------------------------------------------------
+
+NFTiframe:
+
+Embed any NFT shown on zora.co into your own website. All iframes are mobile responsive and are compatible with text, images, videos, and audio.
+
+You can generate an iframe by entering in the zora.co URL for the NFT that you would like to display at embed.zora.co.
+
+
+<div style="max-width: 960px; margin: 0 auto; position: relative;">
+  <style>.nft-embed-wrapper > iframe {width: 100%!important; height:100%!important; border: 0; position: absolute; top: 0; left: 0;}</style>
+  <div class="nft-embed-wrapper" style="position: relative; width:100%; height:0; padding-bottom: 100%;">
+    <iframe 
+      src="https://embed.zora.co/0xabEFBc9fD2F806065b4f3C237d4b59D9A97Bcac7/5846?title=false&controls=false&loop=false&autoplay=false" width="100%" 
+      height="100%" 
+      scrolling="no" 
+      allowtransparency="true" 
+      allowfullscreen="true" 
+      sandbox="allow-pointer-lock allow-same-origin allow-scripts allow-popups">
+    </iframe>
+  <div>
+</div>
+
+
+-------------------------------------------------------------------
+
+NFT Components:
+This library is made up of React components that can be used to render ERC-721 NFTs. 
+Default styling and fetching URLs are included with the library along with caching mechanisms 
+and the ability to easily customize strings, render components, and add different styling.
+
+Links direct to ZORA.co interfaces, but can be overridden by building out the functionality with the ZDK.
+
+
+yarn add @zoralabs/nft-components
+or
+npm install @zoralabs/nft-components --save
+
+
+------------------------------------------------
+Render a ZNFT Thumbnail:
+import { NFTPreview } from "@zoralabs/nft-components";
+
+export const Page = () => <NFTPreview id="3002" />;
+
+------------------------------------------------
+
+Render a ZNFT Full page:
+import { NFTFullPage } from "@zoralabs/nft-components";
+
+export const Page = () => <NFTFullPage id="3002" />;
+
+
+------------------------------------------------
+
+https://ourzora.github.io/nft-components/?path=/story/introduction--page
+
+Zora's NFT components allow you to easily create your own gallery or auction house with zNFT infrastructure.
+
+This library provides the front-end display components to compliment @zoralabs/nft-hooks.
+
+Main components:
+ NFTPreview
+  Used to render a zNFT preview thumbnail
+ NFTFullPage
+  Used to render a zNFT full page component
+ NFTDataProvider
+  Used to compose a custom set of zNFT components
+ MediaConfiguration
+  Configure the text, theme, and network settings for the zNFT.
+ AuctionHouseList
+  Load a list of auctions for a given curator
+
+Key Features:
+ Server-side rendering https://ourzora.github.io/nft-components/iframe.html?path=/story/about-serverrendering--page
+ Customizable theming / styling https://ourzora.github.io/nft-components/iframe.html?path=/story/theming-previewcomponent--preview-card
+ Customizable information ordering / display https://ourzora.github.io/nft-components/iframe.html?path=/story/renderer-about--page
+ Updatable media rendering
+
+
+
+
+
+
+*/
