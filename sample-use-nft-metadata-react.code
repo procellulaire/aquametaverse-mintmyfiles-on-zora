@@ -1,0 +1,50 @@
+/**
+-----------------------------------------
+This hook makes a request to fetch metadata from an NFT's metadataURI
+
+-----------------------------------------
+Interface#
+Pass in the metadata URL to fetch the NFT data:
+
+* @param uri URI of metadata to fetch
+ * @returns @type useNFTMetadataType
+ 
+export function useNFTMetadata(
+  uri?: string,
+)
+
+-----------------------------------------
+Response Shape#
+type useNFTMetadataType = {
+  error?: string // Error: can be thrown from invalid json, unparsable json, network request failure, network request timeout
+  loading?: boolean // Easy indicator to determine if the NFT metadata is loading. Same as (!metadata && !error).
+  metadata?: any // Raw metadata based on the URI passed in
+}
+
+
+Sample code Follows
+
+*/
+
+
+import { useNFTMetadata } from '@zoralabs/nft-hooks'
+
+const MediaDataDisplay = ({ uri: string }) => {
+  const { error, metadata } = useNFTMetadata(uri)
+
+  if (metadata) {
+    return (
+      <div>
+        <h2>Name: {metadata.name}</h2>
+        <p>{metadata.description}</p>
+      </div>
+    )
+  }
+
+  if (error) {
+    return <div>Error loading metadata</div>
+  }
+  return <div>metadata loading...</div>
+}
+
+
