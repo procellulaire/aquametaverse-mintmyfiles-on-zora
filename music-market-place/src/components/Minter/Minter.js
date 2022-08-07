@@ -1,8 +1,9 @@
 import React, { useContext, useEffect } from "react";
 import Stepper from "react-stepper-horizontal/lib/Stepper";
 import { StepContext } from "../../context/StepContext";
+import DeployContract from "./DeployContract";
 import MintMetadata from "./MintMetadata";
-import MintNFT from "./MintNFT";
+
 import UploadFile from "./UploadFile";
 
 export default function Minter() {
@@ -18,9 +19,7 @@ export default function Minter() {
       case 1:
         return <MintMetadata />;
       case 2:
-        return <MintNFT />;
-      case 3:
-        return <UploadFile />;
+        return <DeployContract />;
 
       default:
         return <UploadFile />;
@@ -32,8 +31,7 @@ export default function Minter() {
         steps={[
           { title: "Upload File to IPFS" },
           { title: "Upload Metadata" },
-          { title: "Mint NFT" },
-          { title: "Get Ready for sale" },
+          { title: "Deploy NFT" },
         ]}
         activeStep={step}
       />

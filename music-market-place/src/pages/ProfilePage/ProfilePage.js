@@ -4,34 +4,31 @@ import { useQuery } from 'react-query';
 
 const endpoint = 'https://api.zora.co/graphql';
 
-const collectionNFT = gql`
-  {
-    tokens(
-      networks: [{ network: ETHEREUM, chain: MAINNET }]
-      pagination: { limit: 3 }
-      where: { ownerAddresses: "jacob.eth" }
-    ) {
-      nodes {
-        token {
-          collectionAddress
-          tokenId
-          name
-          owner
-          image {
-            url
-          }
-          metadata
-        }
-      }
-    }
-  }
-`;
 
 export default function ProfilePage() {
   const [data, setData] = useState([])
 
 
   React.useEffect(() => {
+    const collectionNFT = `query myNfts {
+      tokens(networks: [{network: ETHEREUM, chain: RINKEBY}], 
+            pagination: {limit: 3}, 
+            where: {ownerAddresses: "0x19f03dEB28fdB750f487Ca4940A28879fD5D9096"}) {
+        nodes {
+          token {
+            collectionAddress
+            tokenId
+            name
+            owner
+            image {
+              url
+            }
+            metadata
+          }
+        }
+      }
+    }
+    `
     fetch('https://api.zora.co/graphql', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },

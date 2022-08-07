@@ -15,16 +15,19 @@ export default function Web3Login() {
   } = useMoralis();
  const {wallet,setWallet,isAuth,setIsAuth,chain} = useContext(UserContext);
 
+
+//  {
+//   provider: "web3Auth",
+//   clientId:
+//   process.env.REACT_APP_WEB3AUTH_CLIENT,
+//   chainId:chain,
+//   appLogo:logo,
+//   theme:"light"
+// }
+
   const login =  () => {
     if (account === null) {
-      authenticate({
-        provider: "web3Auth",
-        clientId:
-        process.env.REACT_APP_WEB3AUTH_CLIENT,
-        chainId:chain,
-        appLogo:logo,
-        theme:"light"
-      })
+      authenticate()
         .then(function(user) {
           console.log(user.get("ethAddress"));
           setWallet(user.get("ethAddress"))
