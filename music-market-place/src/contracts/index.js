@@ -1,5 +1,7 @@
 import zoraMinterDeployment from "@zoralabs/nft-editions-contracts/deployments/rinkeby/SingleEditionMintableCreator.json";
 import zoraNFTDeployment from "@zoralabs/nft-editions-contracts/deployments/rinkeby/SingleEditionMintable.json";
+import zoraNFTCreatorProxy_ABI from "@zoralabs/nft-drop-contracts/dist/artifacts/ZoraNFTCreatorV1.sol/ZoraNFTCreatorV1.json";
+import dropNft from "./../contracts/DropNFT.json"
 
 export const zoraMinter = {
   abi: zoraMinterDeployment.abi,
@@ -11,4 +13,14 @@ export const zoraMinter = {
 
 export const zoraNFT = {
   abi: zoraNFTDeployment.abi,
+};
+
+export const dropNFTContract = {
+  abi: dropNft,
+};
+
+export const zoraDropCreator = {
+  abi: zoraNFTCreatorProxy_ABI.abi,
+  1: "0x2d2acD205bd6d9D0B3E79990e093768375AD3a30",
+  4: "0x2d2acD205bd6d9D0B3E79990e093768375AD3a30",
 };
